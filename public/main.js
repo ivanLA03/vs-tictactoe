@@ -1,6 +1,5 @@
-//variables
-
-const statusDisplay = document.querySelector(".game-notification"),
+import { listeners } from "./listeners.js"
+export const statusDisplay = document.querySelector(".game-notification"),
     gameState = ['','','','','','','','',''],
     winnings = [
         [0,1,2],
@@ -18,9 +17,7 @@ const statusDisplay = document.querySelector(".game-notification"),
     Xpoints = () => `X ${right}`,
     Opoints = () => `O ${left}`,
     countRight = document.querySelector('.right'),
-    countLeft = document.querySelector('.left'),
-    restartPoints = document.querySelector('.restart-points')
-
+    countLeft = document.querySelector('.left')
 
 let gameActive = true,
     currentPlayer = 'O',
@@ -28,20 +25,11 @@ let gameActive = true,
     right = 0,
     game = 0
 
-// functions
-
-function handleStatusDisplay(message){
+export function handleStatusDisplay(message){
     statusDisplay.innerHTML = message
 }
 
-function listeners(){
-    document.querySelector(".game-container").addEventListener('click',handleCellClick)
-    document.querySelector(".reset").addEventListener('click', handleRestartGame)
-    document.querySelector(".game-container").addEventListener('click',changeColors)
-    restartPoints.addEventListener('click', restartCount)
-}
-
-function handleRestartGame(){
+export function handleRestartGame(){
     gameActive = true
     game += 1
     if(game % 2 == 0){
@@ -55,42 +43,10 @@ function handleRestartGame(){
     document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = '')
 }
 
-function handleCellClick(clickedEvent){
-    const clickedCell = clickedEvent.target
-    if(clickedCell.classList.contains('cell')){
-        const clickedCellIndex = Array.from(clickedCell.parentNode.children).indexOf(clickedCell)
-        if(gameState[clickedCellIndex] !== '' || !gameActive){
-            return
-        }
-        handleCellPlayed(clickedCell,clickedCellIndex)
-        handleResultValidation()
-    }
-}
-
-function changeColors(clickedEvent){
-    const clickedCell = clickedEvent.target
-    if(clickedCell.classList.contains('cell')){
-        const clickedCellIndex = Array.from(clickedCell.parentNode.children).indexOf(clickedCell)
-        if(gameState[clickedCellIndex] === 'X'){
-            clickedCell.id = 'X'
-        }
-    }
-}
-
-function changeColors(clickedEvent){
-    const clickedCell = clickedEvent.target
-    
-}
-
-function handleCellPlayed(clickedCell,clickedCellIndex){
-    gameState[clickedCellIndex] = currentPlayer
-    clickedCell.innerText = currentPlayer
-}
-
 function handleResultValidation(){
     let roundWon = false
     for(let i = 0; i < winnings.length; i++){
-        const winCondition = winnings[i]
+        let winCondition = winnings[i]
         let position1 = gameState[winCondition[0]],
             position2 = gameState[winCondition[1]],
             position3 = gameState[winCondition[2]]
@@ -118,10 +74,26 @@ function handleResultValidation(){
     }
 
     handlePlayerChange()
-
 }
 
-function handlePlayerChange(){
+export function handleCellClick(clickedEvent){
+    const clickedCell = clickedEvent.target
+    if(clickedCell.classList.contains('cell')){
+        const clickedCellIndex = Array.from(clickedCell.parentNode.children).indexOf(clickedCell)
+        if(gameState[clickedCellIndex] !== '' || !gameActive){
+            return
+        }
+        handleCellPlayed(clickedCell,clickedCellIndex)
+        handleResultValidation()
+    }
+}
+
+function handleCellPlayed(clickedCell,clickedCellIndex){
+    gameState[clickedCellIndex] = currentPlayer
+    clickedCell.innerText = currentPlayer
+}
+
+export function handlePlayerChange(){
     currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
     handleStatusDisplay(currentPlayerTurn())
 }
@@ -133,7 +105,7 @@ function restartGameState(){
     }
 }
 
-function count(){
+export function count(){
     if (currentPlayer === 'O'){
         left++
     }
@@ -146,14 +118,12 @@ function count(){
     countLeft.innerHTML = `O : ${left}`
 }
 
-function restartCount(){
+export function restartCount(){
     right = 0
     left = 0
     countRight.innerHTML = `X : ${right}`
     countLeft.innerHTML = `O : ${left}`
 }
-
-
 
 function main(){
     handleStatusDisplay(currentPlayerTurn())

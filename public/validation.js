@@ -1,9 +1,20 @@
-import {winnings, winMessage, drawMessage, count, handlePlayerChange, handleStatusDisplay} from './main'
+import {
+    handlePlayerChange,
+    count,
+    winMessage, 
+    drawMessage, 
+    winnings, 
+    handleStatusDisplay,
+    gameState,
+    game
+} from './main.js'
 
-function handleResultValidation(){
+export let gameActive = true
+
+export function handleResultValidation(){
     let roundWon = false
     for(let i = 0; i < winnings.length; i++){
-        const winCondition = winnings[i]
+        let winCondition = winnings[i]
         let position1 = gameState[winCondition[0]],
             position2 = gameState[winCondition[1]],
             position3 = gameState[winCondition[2]]
@@ -31,7 +42,4 @@ function handleResultValidation(){
     }
 
     handlePlayerChange()
-
 }
-
-export default handleResultValidation
