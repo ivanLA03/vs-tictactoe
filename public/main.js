@@ -123,6 +123,7 @@ export function restartCount(){
     left = 0
     countRight.innerHTML = `X : ${right}`
     countLeft.innerHTML = `O : ${left}`
+    handleRestartGame()
 }
 
 function main(){
