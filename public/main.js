@@ -1,5 +1,5 @@
 import { listeners } from "./listeners.js"
-export const statusDisplay = document.querySelector(".game-notification"),
+const statusDisplay = document.querySelector(".game-notification"),
     gameState = ['','','','','','','','',''],
     winnings = [
         [0,1,2],
@@ -25,7 +25,7 @@ let gameActive = true,
     right = 0,
     game = 0
 
-export function handleStatusDisplay(message){
+function handleStatusDisplay(message){
     statusDisplay.innerHTML = message
 }
 
@@ -91,9 +91,10 @@ export function handleCellClick(clickedEvent){
 function handleCellPlayed(clickedCell,clickedCellIndex){
     gameState[clickedCellIndex] = currentPlayer
     clickedCell.innerText = currentPlayer
+    currentPlayer === "X"? clickedCell.style.color = "#f00" : clickedCell.style.color = "#00e"
 }
 
-export function handlePlayerChange(){
+function handlePlayerChange(){
     currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
     handleStatusDisplay(currentPlayerTurn())
 }
@@ -105,7 +106,7 @@ function restartGameState(){
     }
 }
 
-export function count(){
+function count(){
     if (currentPlayer === 'O'){
         left++
     }
