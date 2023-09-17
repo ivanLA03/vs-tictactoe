@@ -1,6 +1,7 @@
 import { listeners } from "./listeners.js"
-const statusDisplay = document.querySelector(".game-notification"),
-    gameState = ['','','','','','','','',''],
+const 
+    statusDisplay = document.querySelector(".game-notification"),
+    gameState = Array(9).fill(''),
     winnings = [
         [0,1,2],
         [3,4,5],
@@ -11,11 +12,6 @@ const statusDisplay = document.querySelector(".game-notification"),
         [0,4,8],
         [2,4,6]
     ],
-    winMessage = () => `${currentPlayer} Wins`,
-    drawMessage = () => 'Draw',
-    currentPlayerTurn = () => ` ${currentPlayer}\'s turn`,
-    Xpoints = () => `X ${right}`,
-    Opoints = () => `O ${left}`,
     countRight = document.querySelector('.right'),
     countLeft = document.querySelector('.left')
 
@@ -24,6 +20,11 @@ let gameActive = true,
     left = 0,
     right = 0,
     game = 0
+    
+const
+    winMessage = () => `${currentPlayer} Wins`,
+    drawMessage = () => 'Draw',
+    currentPlayerTurn = () => ` ${currentPlayer}\'s turn`
 
 function handleStatusDisplay(message){
     statusDisplay.innerHTML = message
@@ -45,11 +46,11 @@ export function handleRestartGame(){
 
 function handleResultValidation(){
     let roundWon = false
-    for(let i = 0; i < winnings.length; i++){
-        let winCondition = winnings[i]
-        let position1 = gameState[winCondition[0]],
-            position2 = gameState[winCondition[1]],
-            position3 = gameState[winCondition[2]]
+    for (const winCondition of winnings) {
+        const [a, b, c] = winCondition
+        const position1 = gameState[a]
+        const position2 = gameState[b]
+        const position3 = gameState[c]
         if(position1 === ''|| position2 === '' || position3 == ''){
             continue;
         }
@@ -100,10 +101,7 @@ function handlePlayerChange(){
 }
 
 function restartGameState(){
-    let i = gameState.length
-    while (i--){
-        gameState[i] = ''
-    }
+    gameState.fill('')
 }
 
 function count(){
@@ -130,8 +128,6 @@ export function restartCount(){
 function main(){
     handleStatusDisplay(currentPlayerTurn())
     listeners()
-    Xpoints()
-    Opoints()
 }
 
 main()
